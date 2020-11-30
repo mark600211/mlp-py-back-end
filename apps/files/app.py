@@ -5,7 +5,7 @@ import logging
 from .settings import Settings
 
 from .grpc.generated import python_files_pb2_grpc
-from .grpc.service.module import Files
+from .grpc.service import Files
 
 
 class Server:

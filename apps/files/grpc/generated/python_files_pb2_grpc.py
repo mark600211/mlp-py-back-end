@@ -15,15 +15,20 @@ class PythonFilesServiceStub(object):
             channel: A grpc.Channel.
         """
         self.DownloadFile = channel.unary_stream(
-            '/python_files_service.PythonFilesService/DownloadFile',
-            request_serializer=python__files__pb2.Path.SerializeToString,
-            response_deserializer=python__files__pb2.File.FromString,
-        )
+                '/python_files_service.PythonFilesService/DownloadFile',
+                request_serializer=python__files__pb2.Path.SerializeToString,
+                response_deserializer=python__files__pb2.File.FromString,
+                )
         self.UploadFile = channel.stream_unary(
-            '/python_files_service.PythonFilesService/UploadFile',
-            request_serializer=python__files__pb2.Request.SerializeToString,
-            response_deserializer=python__files__pb2.Response.FromString,
-        )
+                '/python_files_service.PythonFilesService/UploadFile',
+                request_serializer=python__files__pb2.Request.SerializeToString,
+                response_deserializer=python__files__pb2.Response.FromString,
+                )
+        self.CreateDocFromTemplate = channel.unary_stream(
+                '/python_files_service.PythonFilesService/CreateDocFromTemplate',
+                request_serializer=python__files__pb2.TemplReq.SerializeToString,
+                response_deserializer=python__files__pb2.TemplRes.FromString,
+                )
 
 
 class PythonFilesServiceServicer(object):
@@ -41,60 +46,87 @@ class PythonFilesServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CreateDocFromTemplate(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_PythonFilesServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-        'DownloadFile': grpc.unary_stream_rpc_method_handler(
-            servicer.DownloadFile,
-            request_deserializer=python__files__pb2.Path.FromString,
-            response_serializer=python__files__pb2.File.SerializeToString,
-        ),
-        'UploadFile': grpc.stream_unary_rpc_method_handler(
-            servicer.UploadFile,
-            request_deserializer=python__files__pb2.Request.FromString,
-            response_serializer=python__files__pb2.Response.SerializeToString,
-        ),
+            'DownloadFile': grpc.unary_stream_rpc_method_handler(
+                    servicer.DownloadFile,
+                    request_deserializer=python__files__pb2.Path.FromString,
+                    response_serializer=python__files__pb2.File.SerializeToString,
+            ),
+            'UploadFile': grpc.stream_unary_rpc_method_handler(
+                    servicer.UploadFile,
+                    request_deserializer=python__files__pb2.Request.FromString,
+                    response_serializer=python__files__pb2.Response.SerializeToString,
+            ),
+            'CreateDocFromTemplate': grpc.unary_stream_rpc_method_handler(
+                    servicer.CreateDocFromTemplate,
+                    request_deserializer=python__files__pb2.TemplReq.FromString,
+                    response_serializer=python__files__pb2.TemplRes.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-        'python_files_service.PythonFilesService', rpc_method_handlers)
+            'python_files_service.PythonFilesService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
+
  # This class is part of an EXPERIMENTAL API.
-
-
 class PythonFilesService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def DownloadFile(request,
-                     target,
-                     options=(),
-                     channel_credentials=None,
-                     call_credentials=None,
-                     insecure=False,
-                     compression=None,
-                     wait_for_ready=None,
-                     timeout=None,
-                     metadata=None):
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
         return grpc.experimental.unary_stream(request, target, '/python_files_service.PythonFilesService/DownloadFile',
-                                              python__files__pb2.Path.SerializeToString,
-                                              python__files__pb2.File.FromString,
-                                              options, channel_credentials,
-                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            python__files__pb2.Path.SerializeToString,
+            python__files__pb2.File.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def UploadFile(request_iterator,
-                   target,
-                   options=(),
-                   channel_credentials=None,
-                   call_credentials=None,
-                   insecure=False,
-                   compression=None,
-                   wait_for_ready=None,
-                   timeout=None,
-                   metadata=None):
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
         return grpc.experimental.stream_unary(request_iterator, target, '/python_files_service.PythonFilesService/UploadFile',
-                                              python__files__pb2.Request.SerializeToString,
-                                              python__files__pb2.Response.FromString,
-                                              options, channel_credentials,
-                                              insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            python__files__pb2.Request.SerializeToString,
+            python__files__pb2.Response.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def CreateDocFromTemplate(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/python_files_service.PythonFilesService/CreateDocFromTemplate',
+            python__files__pb2.TemplReq.SerializeToString,
+            python__files__pb2.TemplRes.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

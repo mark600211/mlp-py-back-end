@@ -42,20 +42,23 @@ class Files(python_files_pb2_grpc.PythonFilesServiceServicer):
 
             os.rename(tmp_path, path)
 
-            uploaded = Synology.uploadFile(path, filename)
+            data = Synology.uploadFile(path, filename)
 
-            if uploaded[1]['success'] == False:
-                code = str(uploaded[1]['error']['code'])
+            if data['upload'][1]['success'] == False:
+                code = str(data["upload"][1]['error']['code'])
                 err = f'Synology return an error with code: {code}'
 
                 err_path = Path.cwd() / 'files' / 'tmp' / docId
 
                 os.rename(path, err_path)
             else:
-                resData = {'docId': docId, "synUrl": 't'}
+                resData = {'docId': docId, "synUrl": data['synUrl']}
 
                 os.remove(path)
         except(error):
             err(error.strerror)
 
         return python_files_pb2.Response(resData=resData, error=err)
+
+    def CreateDocFromTemplate(self, request, context):
+        
